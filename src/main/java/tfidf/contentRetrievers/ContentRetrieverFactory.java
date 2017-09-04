@@ -1,7 +1,6 @@
 package tfidf.contentRetrievers;
 
 import tfidf.IContentRetriever;
-import tfidf.LocalContentRetriever;
 
 public class ContentRetrieverFactory {
 

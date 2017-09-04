@@ -1,4 +1,7 @@
-package tfidf;
+package tfidf.contentRetrievers;
+
+import tfidf.IContentRetriever;
+import tfidf.TfidfUtils;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
