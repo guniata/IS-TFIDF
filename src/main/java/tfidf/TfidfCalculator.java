@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TfidfCalculator {
 
     private static final int MAIN_THREAD_WAIT_MS = 500;
-    public static final int MAX_ALLOWED_EXECUTORS = 20;
 
     private String allContentIdentifiersFilePath;
     private ConcurrentHashMap<String, Set<String>> corpus; // map from each word to the content ids it is found in
@@ -23,7 +22,7 @@ public class TfidfCalculator {
 
     public TfidfCalculator(String allContentIdentifiersFilePath, int amountOfExecutors) {
         this.allContentIdentifiersFilePath = allContentIdentifiersFilePath;
-        this.amountOfExecutors = Math.min(amountOfExecutors, MAX_ALLOWED_EXECUTORS);
+        this.amountOfExecutors = Math.min(amountOfExecutors, TfidfUtils.MAX_ALLOWED_EXECUTORS);
         this.corpus = new ConcurrentHashMap<>();
         this.contentIdentifiers2TfMaps = new ConcurrentHashMap<>();
     }

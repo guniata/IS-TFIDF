@@ -36,7 +36,7 @@ public class TfidfResult {
         return topTfidfs;
     }
 
-    public TfidfTopScores getContentTopTfidfScoredWords(String contentIdentifier, int topAmount){
+    private TfidfTopScores getContentTopTfidfScoredWords(String contentIdentifier, int topAmount){
         SortedSet<TfidfValue> appTfidfSortedSet = new TreeSet<>();
 
         for (String wordInContent : contentIdentifiers2TfMaps.get(contentIdentifier).keySet()) {
@@ -54,10 +54,10 @@ public class TfidfResult {
 
     }
 
-    public TfidfValue getTfidfScore(String word, String contentIdentifier){
+    private TfidfValue getTfidfScore(String word, String contentIdentifier){
         Set<String> occurrences = corpus.get(word);
         TfidfValue result;
-        if(occurrences == null || occurrences.isEmpty() || occurrences.size() == amountOfCorpusDocuments){
+        if(occurrences.size() == amountOfCorpusDocuments){
             result = new TfidfValue(word, 0);
         } else{
             // Using log10 to match the example in wikipedia

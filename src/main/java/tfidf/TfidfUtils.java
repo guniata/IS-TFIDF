@@ -15,9 +15,13 @@ import java.util.Map;
 public class TfidfUtils {
 
     private static final int PRECISION = 4;
-    private static final String WORDS_ONLY_REGEX = "\\W+";//"[^\\p{L}\\p{Z}]";
-    private static final String WORDS_INITIALS_AND_URLS_REGEX = "(?!=^((http(s|)?|ftp|file):\\/\\/){0,1}[-a-zA-Z0-9+&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|])(?!=(\\w+\\.){2,})(?=\\W+)";
+    private static final String WORDS_ONLY_REGEX = "\\W+";
     private static final String SPLIT_REGEX = "\\s+";
+    private static final String ONE_SPACE = " ";
+
+    static final String TEST_ITUNES_APP_IDS = "src\\test\\itunesAppIdsTest.txt";
+    static final int MAX_ALLOWED_EXECUTORS = 10;
+    static final int DEFAULT_TOP_K_AMOUNT = 10;
 
     public static Map<String, Double> getTfMap(String[] words) {
         Map<String, Integer> wordCounts = new HashMap<>();
@@ -30,9 +34,9 @@ public class TfidfUtils {
             }
         }
         Map<String, Double> tfMap = new HashMap<>(wordCounts.size());
-        int amountOfWordsInDescription = words.length;
+        int amountOfWords = words.length;
         for (String word : wordCounts.keySet()) {
-            tfMap.put(word, TfidfUtils.doubleToPrecision((double) wordCounts.get(word) / (double) amountOfWordsInDescription));
+            tfMap.put(word, TfidfUtils.doubleToPrecision((double) wordCounts.get(word) / (double) amountOfWords));
         }
         return tfMap;
     }
@@ -43,8 +47,8 @@ public class TfidfUtils {
     }
 
     public static String[] getWordsArrayOfContent(String content){
-        String wordsOnly = content.replaceAll(TfidfUtils.WORDS_ONLY_REGEX, " ");
-        return wordsOnly.split(TfidfUtils.SPLIT_REGEX);
+        String wordsOnly = content.replaceAll(WORDS_ONLY_REGEX, ONE_SPACE);
+        return wordsOnly.split(SPLIT_REGEX);
     }
 
     public static JSONObject fetchJsonFromUrl(URL url) throws Exception {

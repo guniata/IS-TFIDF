@@ -6,19 +6,12 @@ import tfidf.entities.TfidfTopScores;
 
 import java.util.List;
 
-/**
- * The assumption is that when running this program, the first parameter is a path to a file containing all the app ids
- * each one in a separate line.
- * Otpional parameters:
- *      Amount of parallel executors (limit to 20 in TfidfCalculator)
- *      Amount of top tf-idf results for each input
- */
 public class TfIdfMain {
 
     public static void main(String[] args) throws Exception {
-        String appIdsFilePath = args[0];
-        int amountOfExecutors = args.length > 1 ? Integer.parseInt(args[1]) : 5;
-        int topK = args.length > 2 ? Integer.parseInt(args[2]) : 10;
+        String appIdsFilePath = args.length == 0 ? TfidfUtils.TEST_ITUNES_APP_IDS : args[0];
+        int amountOfExecutors = args.length > 1 ? Integer.parseInt(args[1]) : TfidfUtils.MAX_ALLOWED_EXECUTORS;
+        int topK = args.length > 2 ? Integer.parseInt(args[2]) : TfidfUtils.DEFAULT_TOP_K_AMOUNT;
 
         TfidfCalculator tfidfCalculator = new TfidfCalculator(appIdsFilePath, amountOfExecutors);
 
