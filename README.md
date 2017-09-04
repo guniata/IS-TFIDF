@@ -2,6 +2,10 @@
 
 This program is calculating the TF-IDF score according to the basic method shown here: https://en.wikipedia.org/wiki/Tf%E2%80%93idf.
 
+In order to build this project, use maven with the pom.xml provided with the project.
+
+The seperation of words is the sequences of word-chracters, hence for example, the word U.S. is treated as U & S.
+
 Running the program with no prameters will use a test file included in the project (under test directory), using 10 threads for fetching the data (descriptions of Itunes app store http://itunes.apple.com/lookup?id=ID ) and printing the top 10 words with their TF-IDF score.
 
 The optional parameters are:
