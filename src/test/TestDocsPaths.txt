@@ -1,0 +1,2 @@
+C:\Guni\TestMaven\src\test\TestDoc1.txt
+C:\Guni\TestMaven\src\test\TestDoc2.txt
