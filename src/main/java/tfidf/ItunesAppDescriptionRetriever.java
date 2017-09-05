@@ -1,4 +1,4 @@
-package tfidf.contentRetrievers;
+package tfidf;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

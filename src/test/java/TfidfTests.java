@@ -1,12 +1,14 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import tfidf.IContentRetriever;
 import tfidf.TfidfCalculator;
 import tfidf.TfidfUtils;
-import tfidf.contentRetrievers.ContentRetrieverType;
 import tfidf.entities.TfidfResult;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class TfidfTests {
@@ -65,7 +67,15 @@ public class TfidfTests {
     @Test
     public void testTfidfResultCalculation() throws IOException, InterruptedException {
         TfidfCalculator calculator = new TfidfCalculator(testDocsPath, 2);
-        TfidfResult result = calculator.calculate(ContentRetrieverType.Local);
+        TfidfResult result = calculator.calculate(new IContentRetriever() {
+            @Override
+            public String[] getContent(String contentIdentifier) throws Exception {
+                try (InputStream stream = new FileInputStream(contentIdentifier)){
+                    String fileAsString = TfidfUtils.inputStreamToString(stream);
+                    return TfidfUtils.getWordsArrayOfContent(fileAsString);
+                }
+            }
+        });
 
         Assert.assertEquals(result, expectedResult);
     }

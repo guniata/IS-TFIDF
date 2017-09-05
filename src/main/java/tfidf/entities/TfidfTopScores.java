@@ -4,7 +4,7 @@ import java.util.SortedSet;
 
 public class TfidfTopScores {
 
-    public static final String SEPERATOR = " ; ";
+    public static final String SEPARATOR = " ; ";
     private String contentIdentifier;
     private SortedSet<TfidfValue> scores;
 
@@ -26,7 +26,7 @@ public class TfidfTopScores {
         StringBuilder appIdTopScoresSB = new StringBuilder(contentIdentifier + ": ");
         for (TfidfValue tfidfValue : scores) {
             appIdTopScoresSB.append(tfidfValue);
-            appIdTopScoresSB.append(SEPERATOR);
+            appIdTopScoresSB.append(SEPARATOR);
         }
         int lastIndexOfSeparator = appIdTopScoresSB.lastIndexOf(";");
         return appIdTopScoresSB.replace(lastIndexOfSeparator, lastIndexOfSeparator+1, ".").toString();

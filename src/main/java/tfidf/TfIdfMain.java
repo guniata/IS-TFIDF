@@ -1,6 +1,5 @@
 package tfidf;
 
-import tfidf.contentRetrievers.ContentRetrieverType;
 import tfidf.entities.TfidfResult;
 import tfidf.entities.TfidfTopScores;
 
@@ -15,7 +14,7 @@ public class TfIdfMain {
 
         TfidfCalculator tfidfCalculator = new TfidfCalculator(appIdsFilePath, amountOfExecutors);
 
-        TfidfResult tfidfResult = tfidfCalculator.calculate(ContentRetrieverType.Itunes);
+        TfidfResult tfidfResult = tfidfCalculator.calculate(new ItunesAppDescriptionRetriever());
 
         List<TfidfTopScores> allTopTfidf = tfidfResult.getAllTopTfidf(topK);
         for(TfidfTopScores topScores : allTopTfidf) {

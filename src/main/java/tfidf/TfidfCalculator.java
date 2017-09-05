@@ -1,7 +1,5 @@
 package tfidf;
 
-import tfidf.contentRetrievers.ContentRetrieverType;
-import tfidf.contentRetrievers.ContentRetrieverFactory;
 import tfidf.entities.TfidfResult;
 
 import java.io.*;
@@ -27,7 +25,7 @@ public class TfidfCalculator {
         this.contentIdentifiers2TfMaps = new ConcurrentHashMap<>();
     }
 
-    public TfidfResult calculate(ContentRetrieverType retrieverType) throws IOException, InterruptedException {
+    public TfidfResult calculate(IContentRetriever contentRetriever) throws IOException, InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(amountOfExecutors);
 
         AtomicInteger latchCounter = new AtomicInteger(0);
@@ -39,7 +37,7 @@ public class TfidfCalculator {
                         singleContentIdentifier,
                         documentsCounter,
                         latchCounter,
-                        retrieverType));
+                        contentRetriever));
             }
             while (latchCounter.get() > 0) {
                 Thread.sleep(MAIN_THREAD_WAIT_MS);
@@ -55,14 +53,14 @@ public class TfidfCalculator {
         private String singleContentIdentifier;
         private AtomicInteger documentsCounter;
         private AtomicInteger latchCounter;
-        private ContentRetrieverType retrieverType;
+        private IContentRetriever retriever;
 
-        public SingleAppCalculator(String singleContentIdentifier, AtomicInteger documentsCounter, AtomicInteger latchCounter, ContentRetrieverType retrieverType) {
+        public SingleAppCalculator(String singleContentIdentifier, AtomicInteger documentsCounter, AtomicInteger latchCounter, IContentRetriever retriever) {
             this.singleContentIdentifier = singleContentIdentifier;
             this.documentsCounter = documentsCounter;
             latchCounter.incrementAndGet();
             this.latchCounter = latchCounter;
-            this.retrieverType = retrieverType;
+            this.retriever = retriever;
         }
 
         @Override
@@ -70,7 +68,7 @@ public class TfidfCalculator {
             documentsCounter.incrementAndGet();
             try {
                 System.out.println("*** Running calculation for singleContentIdentifier " + singleContentIdentifier + " ***");
-                String[] distinctWordsAndTotalCount = ContentRetrieverFactory.getRetriever(retrieverType).getContent(singleContentIdentifier);
+                String[] distinctWordsAndTotalCount = retriever.getContent(singleContentIdentifier);
                 Map<String, Double> singleContentTfMap = TfidfUtils.getTfMap(distinctWordsAndTotalCount);
                 updateCorpus(singleContentIdentifier, singleContentTfMap.keySet());
                 contentIdentifiers2TfMaps.put(singleContentIdentifier, singleContentTfMap);
