@@ -60,8 +60,8 @@ public class TfidfTests {
         Map<String, Double> tfMap1 = TfidfUtils.getTfMap(TfidfUtils.getWordsArrayOfContent(doc1Content));
         Map<String, Double> tfMap2 = TfidfUtils.getTfMap(TfidfUtils.getWordsArrayOfContent(doc2Content));
 
-        Assert.assertEquals(tfMap1, doc1ExpectedTfMap);
-        Assert.assertEquals(tfMap2, doc2ExpectedTfMap);
+        Assert.assertEquals(doc1ExpectedTfMap, tfMap1);
+        Assert.assertEquals(doc2ExpectedTfMap, tfMap2);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class TfidfTests {
             }
         });
 
-        Assert.assertEquals(result, expectedResult);
+        Assert.assertEquals(expectedResult, result);
     }
 }

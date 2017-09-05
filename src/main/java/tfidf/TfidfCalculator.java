@@ -82,14 +82,8 @@ public class TfidfCalculator {
 
         private void updateCorpus(String singleContentIdentifier, Set<String> words) {
             for (String word : words) {
-                // Update corpus
-                if (!corpus.containsKey(word)) {
-                    Set<String> appIdsForWord = new HashSet<>();
-                    appIdsForWord.add(singleContentIdentifier);
-                    corpus.put(word, appIdsForWord);
-                } else {
-                    corpus.get(word).add(singleContentIdentifier);
-                }
+                corpus.putIfAbsent(word, new HashSet<String>());
+                corpus.get(word).add(singleContentIdentifier);
             }
         }
     }

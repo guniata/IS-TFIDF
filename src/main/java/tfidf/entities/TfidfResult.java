@@ -87,4 +87,13 @@ public class TfidfResult {
         result = 31 * result + amountOfCorpusDocuments;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "TfidfResult{" +
+                "corpus=" + corpus +
+                ", contentIdentifiers2TfMaps=" + contentIdentifiers2TfMaps +
+                ", amountOfCorpusDocuments=" + amountOfCorpusDocuments +
+                '}';
+    }
 }
